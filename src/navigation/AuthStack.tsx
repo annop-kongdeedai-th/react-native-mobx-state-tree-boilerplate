@@ -5,11 +5,11 @@ import SplashScreen from "../screens/SplashScreen";
 
 const AuthStack = createStackNavigator(
   {
-    Splash: SplashScreen,
     Login: LoginScreen,
+    Splash: SplashScreen,
   },
   {
-    initialRouteName: "Splash",
+    initialRouteName: "Login",
   },
 );
 export default AuthStack;

@@ -25,4 +25,4 @@ class Toast extends React.Component<IToast> {
     );
   }
 }
-export default  inject("appStore")(observer(Toast));
+export default inject("appStore")(observer(Toast));

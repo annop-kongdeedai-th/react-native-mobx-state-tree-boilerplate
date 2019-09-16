@@ -1,15 +1,15 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { ActivityIndicator, StyleSheet } from "react-native";
-import { Button as BaseButton, IButton } from ".";
-import { COLORS, colorSet, sizeSet } from "../../../constants";
-import { Container } from "../container";
-import { Text } from "../text";
+import {ActivityIndicator, StyleSheet} from 'react-native';
+import {Button as BaseButton, IButton} from '.';
+import {COLORS, colorSet, sizeSet} from '../../../constants';
+import {Container} from '../container';
+import {Text} from '../text';
 
 interface ITextButton extends IButton {
   title: string;
   color?: colorSet;
-  oval?: boolean;
+  oval?: boolean | 'very';
   outline?: boolean;
   invert?: boolean;
   size?: sizeSet;
@@ -27,32 +27,31 @@ interface ITextButtonStyle {
 class TextButton extends React.PureComponent<ITextButton> {
   public static defaultProps = {};
   public render() {
-    const { title, onPress, stretch, loading, style } = this.props;
+    const {title, onPress, stretch, loading, style} = this.props;
 
     const textButtonStyle: ITextButtonStyle = this.getStyle();
     return (
       <BaseButton onPress={onPress} stretch={stretch}>
-        {loading ?
+        {loading ? (
           this.renderLoading()
-          :
+        ) : (
           <Container
             padV
-            style={[styles.container, styles.shadow, textButtonStyle, style]}
-          >
+            style={[styles.container, styles.shadow, textButtonStyle, style]}>
             <Text
               color={textButtonStyle.textColor}
               size={textButtonStyle.fontSize}>
-              {" "}
+              {' '}
               {title}
             </Text>
           </Container>
-        }
+        )}
       </BaseButton>
     );
   }
 
   private getStyle = () => {
-    const { color, oval, invert, size, outline } = this.props;
+    const {color, oval, invert, size, outline} = this.props;
     const style: ITextButtonStyle = {};
     const _color = color || colorSet.default;
     if (!invert) {
@@ -68,8 +67,13 @@ class TextButton extends React.PureComponent<ITextButton> {
       }
     }
     if (oval) {
-      style.borderRadius = 36;
-      style.borderWidth = 1;
+      if (oval === 'very') {
+        style.borderRadius = 36;
+        style.borderWidth = 1;
+      } else {
+        style.borderRadius = 8;
+        style.borderWidth = 1;
+      }
     }
 
     style.fontSize = size;
@@ -88,7 +92,7 @@ class TextButton extends React.PureComponent<ITextButton> {
 const styles = StyleSheet.create({
   container: {},
   loading: {
-    position: "absolute",
+    position: 'absolute',
     top: 5,
     bottom: 0,
     right: 0,
